@@ -1,5 +1,5 @@
 class SocketManager {
-    constructor(cronopio) {
+    constructor() {
         this._PORT = 9999;
         this._socket = io.connect('http://localhost:' + this._PORT);
 
@@ -9,7 +9,6 @@ class SocketManager {
 
         this._socket.on("draw-a-circle", (info) => {
             console.log(`Received: ${JSON.stringify(info)}`);
-            cronopio.position = info;
         });
 
         this._socket.on("disconnect", () => {

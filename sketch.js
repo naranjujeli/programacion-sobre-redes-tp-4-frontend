@@ -1,5 +1,12 @@
-let cron = new Cronopio({x: 0, y: 0}, 10);
-const socketManager = new SocketManager(cron);
+// const socketManager = new SocketManager();
+
+const cronopio = new Cronopio(
+    new Vector(600, 400),
+    50,
+    40,
+    40,
+    30
+);
 
 function setup() {
     let canvas = createCanvas(1500, 800);
@@ -9,17 +16,18 @@ function setup() {
 }
 
 function draw() {
-    if (mouseIsPressed) {
-        stroke(255);
-        fill(0);
-    } else {
-        stroke(0);
-        fill(255);
-    }
-    circle(mouseX, mouseY, 50);
+    background(0);
+    
+    textSize(60);
+    text(cronopio.life, 10, 60);
+    text(`Velocity: \n${cronopio.velocity.x} \n${cronopio.velocity.y}`, 10, 130);
 
-    if (cron) {
-        fill(red(255));
-        circle(cron.position.x, cron.position.y, 20);
+    fill(0, 128, 0);
+
+    if (cronopio.alive) {
+        circle(cronopio.position.x, cronopio.position.y, cronopio.diameter);
+        cronopio.time();
+    } else {
+        background(255, 0, 0);
     }
 }

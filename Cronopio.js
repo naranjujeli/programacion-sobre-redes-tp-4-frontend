@@ -6,7 +6,7 @@ class Cronopio {
         b,
         t,
         initialLifeDuration=100,
-        windowSize={width: 1500, height: 800}
+        windowSize=new Vector(1500, 800)
     ) {
         this.position = new Vector(position.x, position.y);
         this.diameter = diameter;
@@ -65,9 +65,9 @@ class Cronopio {
     }
 
     calculateNewVelocity() {
-        const p = (x) => -25*(Math.pow(x, 2))+this.b*x+this.a;
-        const f = (x) => 3/(1+Math.pow((Math.E)(-p(x)), 2));
-        x = 2*Math.random()-1;
+        const p = (x) => - 25 * (Math.pow(x, 2)) + this.b * x + this.a;
+        const f = (x) => 3 / (1 + Math.pow(Math.E, -p(x)));
+        const x = 2 * Math.random() - 1;
 
         const newVelocityMagnitude = f(x);
         const newVelocity = new Vector(1, 1);
@@ -78,14 +78,14 @@ class Cronopio {
     bounce() {
         // TODO cambiar esto mas tarde
         const frame = 100;
-        if (this.position.x + this.diameter > this.windowSize.width)
+        if (this.position.x + this.diameter > this.windowSize.x)
             this.position.x = frame;
         if (this.position.x - this.diameter < 0)
-            this.position.x = this.windowSize.width-frame;
-        if (this.position.y + this.diameter > this.windowSize.height)
+            this.position.x = this.windowSize.x-frame;
+        if (this.position.y + this.diameter > this.windowSize.y)
             this.position.y = frame;
         if (this.position.y - this.diameter < 0)
-            this.position.y = this.windowSize.height-frame;
+            this.position.y = this.windowSize.y-frame;
     }
 
     eat() {
