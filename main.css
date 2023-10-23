@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(fonts/Poppins-Medium.ttf) format('truetype');
+}
+
+:root {
+    overflow-x: hidden;
+}
+
+* {
+    color: #eee;
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+    background-color: #444;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#simulation {
+    aspect-ratio: 15/8;
+    max-height: 80%;
+}
+
+#simulation canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
