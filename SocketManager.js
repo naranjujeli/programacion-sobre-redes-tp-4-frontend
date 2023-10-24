@@ -1,18 +1,29 @@
 class SocketManager {
-    constructor() {
-        this._PORT = 9999;
-        this._socket = io.connect('http://localhost:' + this._PORT);
+    constructor(cronopios) {
+        console.log("SocketManager initialized");
+        this.PORT = 5000;
+        this.socket = io.connect('http://localhost:' + this.PORT);
 
-        this._socket.on("connect", () => {
-            console.log("New connection established");
+        this.socket.on("connect", () => {
+            console.log("Established connection with the server");
         });
 
-        this._socket.on("draw-a-circle", (info) => {
-            console.log(`Received: ${JSON.stringify(info)}`);
-        });
+        this.socket.on("new_gen", (data) => {
+            for (let i = 0; i < cronopios.length; i++) {
+                cronopios[i] = data[Object.keys(data)[i]]
+            }
+        })
 
-        this._socket.on("disconnect", () => {
+        this.socket.on("disconnect", () => {
             console.log("The connection was closed");
         });
+    }
+
+    sendDeadCronopios(deadCronopios) {
+        const deadCronopiosAsJSON = {};
+        for (let i = 0; i < deadCronopios.length; i++) {
+            deadCronopiosAsJSON[i] = deadCronopios[i];
+        }
+        this.socket.emit("dead_gen", deadCronopiosAsJSON);
     }
 }
