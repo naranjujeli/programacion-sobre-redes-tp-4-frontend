@@ -1,3 +1,5 @@
+const WINDOW_SIZE = new Vector(1500, 800);
+
 class SocketManager {
     constructor(cronopios) {
         console.log("SocketManager initialized");
@@ -9,10 +11,17 @@ class SocketManager {
         });
 
         this.socket.on("new_gen", (data) => {
-            for (let i = 0; i < cronopios.length; i++) {
-                cronopios[i] = data[Object.keys(data)[i]]
-            }
-        })
+            cronopios = data.map((cronopio) => {
+                const { diameter, a, b, t } = cronopio;
+                return new Cronopio(
+                    new Vector(Math.random() * 1500, Math.random() * 800),
+                    diameter,
+                    a,
+                    b,
+                    t
+                );
+            })
+        });
 
         this.socket.on("disconnect", () => {
             console.log("The connection was closed");
