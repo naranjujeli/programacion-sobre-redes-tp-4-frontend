@@ -8,7 +8,7 @@ class Cronopio {
         initialLifeDuration=100,
         windowSize=new Vector(1500, 800)
     ) {
-        this.position = new Vector(position.x, position.y);
+        this.position = position;
         this.diameter = diameter;
         this.a = a;
         this.b = b;

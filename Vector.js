@@ -31,12 +31,12 @@ class Vector {
     }
 
     add(otherVector) {
-        return (new Vector(this.x + otherVector.x, this.y + otherVector.y));
+        return new Vector(this.x + otherVector.x, this.y + otherVector.y);
     }
 
     scale(s) {
-        this.x *= s; 
-        this.y *= s;
+        this.x = this.x * s; 
+        this.y = this.y * s;
     }
 
     normalize() {

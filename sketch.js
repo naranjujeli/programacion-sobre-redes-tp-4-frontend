@@ -5,29 +5,41 @@ const cronopios = new Array(CRONOPIOS_QUANTITY);
 const socketManager = new SocketManager(cronopios);
 const foods = new Array(FOOD_QUANTITY)
 
+
 function setup() {
+    resetFoods();
+    for (let i = 0; i < cronopios.length; i++) {
+        cronopios[i] = new Cronopio(
+            new Vector(Math.random() * 1500, Math.random() * 800),
+            30,
+            0.4,
+            0.4,
+            30
+        )
+    }
+    
     let canvas = createCanvas(1500, 800);
     canvas.parent('simulation');
-
+    
     background(0);
 }
 
 function draw() {
     background(0);
-    
-    fill(0, 128, 0);
-
-    if (foods.length === 0) {
-        resetFoods();
-    } else {
-        foods.forEach((food) => {
-            circle(food.x, food.y, 15);
-        });
-    }
 
     if (cronopios[0] === undefined) {
         // NOTHING
     } else if (!allCronopiosDead()) {
+        fill(0, 128, 0);
+        
+        if (foods.length === 0) {
+            resetFoods();
+        } else {
+            foods.forEach((food) => {
+                circle(food.x, food.y, 15);
+            });
+        }
+
         cronopios.forEach((cronopio) => {
             if (cronopio.alive) {
                 circle(cronopio.position.x, cronopio.position.y, cronopio.diameter*2);
@@ -43,7 +55,6 @@ function draw() {
     } else {
         socketManager.sendDeadCronopios(cronopios);
     }
-
 }
 
 function resetFoods() {
@@ -53,10 +64,10 @@ function resetFoods() {
 }
 
 function allCronopiosDead() {
-    cronopios.forEach((cronopio) => {
+    for (let cronopio of cronopios) {
         if (cronopio.alive) {
             return false;
         }
-    })
+    }
     return true;
 }

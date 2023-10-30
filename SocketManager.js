@@ -2,7 +2,6 @@ const WINDOW_SIZE = new Vector(1500, 800);
 
 class SocketManager {
     constructor(cronopios) {
-        console.log("SocketManager initialized");
         this.PORT = 5000;
         this.socket = io.connect('http://localhost:' + this.PORT);
 
@@ -11,6 +10,7 @@ class SocketManager {
         });
 
         this.socket.on("new_gen", (data) => {
+            console.log("Received new generation");
             cronopios = data.map((cronopio) => {
                 const { diameter, a, b, t } = cronopio;
                 return new Cronopio(
