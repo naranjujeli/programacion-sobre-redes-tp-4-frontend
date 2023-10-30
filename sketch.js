@@ -27,9 +27,7 @@ function setup() {
 function draw() {
     background(0);
 
-    if (cronopios[0] === undefined) {
-        // NOTHING
-    } else if (!allCronopiosDead()) {
+    if (!allCronopiosDead()) {
         fill(0, 128, 0);
         
         if (foods.length === 0) {
@@ -53,7 +51,10 @@ function draw() {
             }
         })
     } else {
-        socketManager.sendDeadCronopios(cronopios);
+        if (!socketManager.waitingNewGen) {
+            socketManager.sendDeadCronopios(cronopios);
+            socketManager.waitingNewGen = true;
+        }
     }
 }
 
